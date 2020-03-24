@@ -4,5 +4,8 @@ compile:
 output:
 	gcc -o siavm *.o
 
+debug:
+	gcc -g -o siavm *.c
+
 remove:
-	rm -r *.o siavm
+	rm -rf *.o siavm ./siavm.dSYM

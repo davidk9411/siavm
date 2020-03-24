@@ -7,6 +7,7 @@ Last Modified: 03/23/2020
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 
 //Personally defined header
 //refer to the define.h file for further details
@@ -17,6 +18,11 @@ Memory sys_memory;
 int cpu_register[NUM_REG];
 
 int main(int argc, char *argv[]){
+
+	if(argc!=2){
+		printf("siavm filename\nTry Again\n");
+		return 1;
+	}
 
 	init();
 	print_vm_resource();
@@ -39,12 +45,12 @@ void init(){
 
 	printf("%s\t", "Initializing System Registers..." );
 	for(int index=0; index<NUM_REG; index++){
-		cpu_register[index]=0;
 		/*
-		TO-DO: ASSIGN EITHER LARGEST NUMBER OR SMALLEST NUMBER INT TYPE CAN HAVE
-		SINCE MEMORY SIZE IS 1024 AND MOVE INSTRUCTION CAN ONLY HOLD
-		SIGNED 8 BIT VALUE	
+		Note that I am initializing each register to smallest value of integer
+		in order to avoid error resulted from possible value that each register can hold
+		MOVE ops can only assign signed 8 bit value (-127 to 128) 
 		*/
+		cpu_register[index]=INT_MIN;
 	}
 	printf("OK!!\n");
 

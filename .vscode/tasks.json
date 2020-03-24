@@ -8,13 +8,30 @@
             "type": "shell",
             "command": "gcc",
             "args": [
+                "-g",
                 "-o",
                 "siavm",
                 "*.c"
             ],
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "presentation": {
+                "clear": true
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "execute_siavm",
+            "command": "${fileDirname}/siavm",
+            "group": "test",
+            "presentation": {
+                "clear": true
             }
         }
     ]
