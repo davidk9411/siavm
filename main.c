@@ -74,19 +74,23 @@ void print_vm_resource(){
 
 int load(char *file_name){
 
-	printf("Loading input file...\n");
+	printf("Opening input file...\t");
 
 	//Opens the file read-only binary mode
 	FILE *input = fopen(file_name,"rb");
 	
+
+
 	//File open error checking and return error if not opened
 	if(input == NULL){
 		printf("ERROR: UNABLE TO OPEN INPUT FILE\n");
 		return 1;
 	}
 
+	printf("OK!!\n");
 	printf("Input file: %s\n", basename(file_name));
-	
+	printf("Loading input file to system memory...\t");
+
 	fseek(input, 0, SEEK_SET);
 
 	while(!feof(input)){
@@ -101,7 +105,13 @@ int load(char *file_name){
 		
 		//Test printf and typecast to unsigned char for bit overflow
 		//printf("Converted: %02X\n", (unsigned char)(raw[0]));
+		if(mem_push(&sys_memory,(unsigned char)raw[0])!=0){
+			printf("ERROR: UNABLE TO WRITE DATA ON MEMORY\n");
+			return 1;
+		}
 	}
+
+	printf("OK!!\n");
 
 	fclose(input);
 

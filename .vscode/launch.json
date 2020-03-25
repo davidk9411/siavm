@@ -9,7 +9,7 @@
             "type": "lldb",
             "request": "launch",
             "program": "${workspaceFolder}/siavm",
-            "args": ["./inputs/result1.bin"],
+            "args": ["./inputs/result15.bin"],
             "cwd": "${workspaceFolder}",
         }
     ]

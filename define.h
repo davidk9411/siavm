@@ -11,6 +11,7 @@ int load(char *file_name);
 //Note that memory related function is prefixed with mem_
 void mem_init(Memory *sys_mem);
 int mem_is_empty(Memory *sys_mem);
+int mem_push(Memory *sys_mem, unsigned char data);
 
 //Predefine constant goes here
 #define TRUE 1
