@@ -21,7 +21,10 @@ int cpu_register[NUM_REG];
 int main(int argc, char *argv[]){
 
 	if(argc!=2){
-		printf("siavm filename\nTry Again\n");
+		print_red();
+		printf("ERROR: NO INPUT FILE DETECTED\n");
+		print_reset();
+		printf("siavm filename\n");
 		return 1;
 	}
 
@@ -64,10 +67,11 @@ void init(){
 void print_vm_resource(){
 
 	//const int mem_size = sizeof(memory)/sizeof(unsigned char);
-
-	printf("Virtual Machine System Specification\n");
+	print_yellow();
+	printf("SIA Virtual Machine System Specification\n");
 	printf("Memory: %lu Bytes\n", sizeof(sys_memory.address)/sizeof(unsigned char));
 	printf("Registers: %lu registers & 1 register = %lu bytes \n", sizeof(cpu_register)/sizeof(int), sizeof(int));
+	print_reset();
 
 	return;
 }
@@ -79,11 +83,11 @@ int load(char *file_name){
 	//Opens the file read-only binary mode
 	FILE *input = fopen(file_name,"rb");
 	
-
-
 	//File open error checking and return error if not opened
 	if(input == NULL){
-		printf("ERROR: UNABLE TO OPEN INPUT FILE\n");
+		print_red();
+		printf("\nERROR: UNABLE TO OPEN INPUT FILE\n");
+		print_reset();
 		return 1;
 	}
 
@@ -106,7 +110,9 @@ int load(char *file_name){
 		//Test printf and typecast to unsigned char for bit overflow
 		//printf("Converted: %02X\n", (unsigned char)(raw[0]));
 		if(mem_push(&sys_memory,(unsigned char)raw[0])!=0){
-			printf("ERROR: UNABLE TO WRITE DATA ON MEMORY\n");
+			print_red();
+			printf("\nERROR: UNABLE TO WRITE DATA ON MEMORY\n");
+			print_reset();
 			return 1;
 		}
 	}

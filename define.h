@@ -13,6 +13,11 @@ void mem_init(Memory *sys_mem);
 int mem_is_empty(Memory *sys_mem);
 int mem_push(Memory *sys_mem, unsigned char data);
 
+//Functions for printf colors
+void print_red();
+void print_yellow();
+void print_reset();
+
 //Predefine constant goes here
 #define TRUE 1
 #define FALSE 0
