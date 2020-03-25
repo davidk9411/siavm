@@ -17,4 +17,3 @@ int mem_is_empty(Memory *sys_mem);
 #define FALSE 0
 #define NUM_REG 16
 
-

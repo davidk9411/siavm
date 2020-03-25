@@ -90,12 +90,17 @@ int load(char *file_name){
 	fseek(input, 0, SEEK_SET);
 
 	while(!feof(input)){
-		char str[3];
-		fread(str,2,1,input);
-		printf("raw data: %s\n", str);
-		printf("converted: %#02X%#02X\n", str[0],str[1]);
-		if(str[0]==13)
-			puts("go");
+		/*
+		Raw input data array.
+		Note that typecast to unsigned char is required to avoid bitoverflow
+		when handling hex values
+		*/
+		char raw[2];
+		//Read data byte by byte
+		fread(raw,1,1,input);
+		
+		//Test printf and typecast to unsigned char for bit overflow
+		//printf("Converted: %02X\n", (unsigned char)(raw[0]));
 	}
 
 	fclose(input);
