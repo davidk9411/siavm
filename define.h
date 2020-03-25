@@ -5,6 +5,7 @@
 
 void init();
 void print_vm_resource();
+int load(char *file_name);
 
 //Functions for memory stack, DO NOT MODIFY!!!
 //Note that memory related function is prefixed with mem_

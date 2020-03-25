@@ -8,6 +8,7 @@ Last Modified: 03/23/2020
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+#include <libgen.h>
 
 //Personally defined header
 //refer to the define.h file for further details
@@ -26,6 +27,8 @@ int main(int argc, char *argv[]){
 
 	init();
 	print_vm_resource();
+	if(	load(argv[1]) != 0 )
+		return 1;
 
 	return 0;
 }
@@ -67,4 +70,35 @@ void print_vm_resource(){
 	printf("Registers: %lu registers & 1 register = %lu bytes \n", sizeof(cpu_register)/sizeof(int), sizeof(int));
 
 	return;
+}
+
+int load(char *file_name){
+
+	printf("Loading input file...\n");
+
+	//Opens the file read-only binary mode
+	FILE *input = fopen(file_name,"rb");
+	
+	//File open error checking and return error if not opened
+	if(input == NULL){
+		printf("ERROR: UNABLE TO OPEN INPUT FILE\n");
+		return 1;
+	}
+
+	printf("Input file: %s\n", basename(file_name));
+	
+	fseek(input, 0, SEEK_SET);
+
+	while(!feof(input)){
+		char str[3];
+		fread(str,2,1,input);
+		printf("raw data: %s\n", str);
+		printf("converted: %#02X%#02X\n", str[0],str[1]);
+		if(str[0]==13)
+			puts("go");
+	}
+
+	fclose(input);
+
+	return 0;
 }
