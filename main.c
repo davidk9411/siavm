@@ -1,7 +1,7 @@
 /*
 Assignment 3 _ SIA VM
 Made by David Kim
-Last Modified: 03/23/2020
+Last Modified: 04/01/2020
 */
 
 #include <stdio.h>
@@ -17,6 +17,9 @@ Last Modified: 03/23/2020
 //Global Variable goes here
 Memory sys_memory;
 int cpu_register[NUM_REG];
+unsigned char current_instruction[4];
+int halt;
+int mem_counter;
 
 int main(int argc, char *argv[]){
 
@@ -33,6 +36,22 @@ int main(int argc, char *argv[]){
 	if(	load(argv[1]) != 0 )
 		return 1;
 
+	cpu_register[15] = 1020;
+	halt = FALSE;
+	mem_counter=0;
+
+	do{
+		ci_reset();
+		fetch(mem_counter);
+		if(decode()!=0){
+			print_red();
+			printf("ERROR: UNSUPPORTED OPCODE TYPE.\n");
+			print_reset();
+			return 1;
+		}
+
+	}while(halt == FALSE);
+	
 	return 0;
 }
 
@@ -56,7 +75,7 @@ void init(){
 		in order to avoid error resulted from possible value that each register can hold
 		MOVE ops can only assign signed 8 bit value (-127 to 128) 
 		*/
-		cpu_register[index]=INT_MIN;
+		cpu_register[index]=INT_MAX;
 	}
 	printf("OK!!\n");
 
@@ -115,6 +134,9 @@ int load(char *file_name){
 			print_reset();
 			return 1;
 		}
+
+		if(feof(input))
+			break;
 	}
 
 	printf("OK!!\n");

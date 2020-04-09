@@ -66,3 +66,14 @@ int mem_pop(Memory *sys_mem){
 
 	return 0; 
 }
+
+unsigned char mem_search(Memory *sys_mem, int index){
+
+	//Check whether memory is empty
+	if(mem_is_empty(&sys_memory)==TRUE){
+		return 0xff;
+	}
+
+	//Return memory value
+	return sys_mem->address[index];
+}
