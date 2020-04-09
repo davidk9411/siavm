@@ -1,7 +1,7 @@
 /*
 Assignment 3 _ SIA VM
 Made by David Kim
-Last Modified: 04/01/2020
+Last Modified: 04/09/2020
 */
 
 #include <stdio.h>
@@ -52,6 +52,7 @@ int main(int argc, char *argv[]){
 
 	}while(halt == FALSE);
 	
+	printf("Done!\n");
 	return 0;
 }
 

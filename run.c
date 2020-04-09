@@ -1,7 +1,7 @@
 /*
 Assignment 3 _ SIA VM
 Made by David Kim
-Last Modified: 04/01/2020
+Last Modified: 04/09/2020
 */
 
 #include <stdio.h>
@@ -23,8 +23,10 @@ extern int mem_counter;
 //resets all elements of current instruction register to xff
 void ci_reset(){
 
+    //Let's avoid confliction when dealing with instruction
+    //So I'm using UCHAR_MAX for initial value instead of 0;
     for(int i=0; i<sizeof(current_instruction)/sizeof(unsigned char); i++)
-        current_instruction[i] = INT_MAX;
+        current_instruction[i] = UCHAR_MAX;
 
 }
 
@@ -40,15 +42,27 @@ int decode(){
     int opcode = current_instruction[0] >> 4;
     switch (opcode)
     {
-    case 0:
-        halt = TRUE;
-        return 0;
-    case 12:
-        printf("Interrupt!\n");
-        mem_counter+=2;
-        return 0;
-    default:
-        return 1;
-        break;
+        // OPCODE 0: HALT
+        case 0:
+            halt = TRUE;
+            return 0;
+        // OPCODE 1: ADD
+        case 1:
+            addr();
+            mem_counter+=2;
+            return 0;
+        // OPCODE 11: MOVE
+        case 11:
+            move();
+            mem_counter+=2;
+            return 0;
+        // OPCODE 12: INTERRUPT
+        case 12:
+            interrupt();
+            mem_counter+=2;
+            return 0;
+        // ERROR
+        default:
+            return 1;
     }
 }
