@@ -23,6 +23,7 @@ int mem_counter;
 
 int main(int argc, char *argv[]){
 
+	//input argument chekcer
 	if(argc!=2){
 		print_red();
 		printf("ERROR: NO INPUT FILE DETECTED\n");
@@ -31,28 +32,50 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
+	//initializes system resource
 	init();
+	//prints system rexource in yellow color
 	print_vm_resource();
+	//loads input file into system memory with error handler
 	if(	load(argv[1]) != 0 )
 		return 1;
 
+	//sets R15 to default value
 	cpu_register[15] = 1020;
+
+	//while loop controller
 	halt = FALSE;
+
+	//memory address counter for instruction decoding
 	mem_counter=0;
 
+	//fetch->decode -> execute -> store loop until HALT
 	do{
+		//Error checking purpose
+		int result;
+		//resets current instruction register every time
 		ci_reset();
+		//fetch from memory
 		fetch(mem_counter);
-		if(decode()!=0){
+		//decode, excute, and store handler
+		if((result=decode())!=0){
 			print_red();
-			printf("ERROR: UNSUPPORTED OPCODE TYPE.\n");
+			//invlaid opcode
+			if(result==1)
+				puts("ERROR: UNSUPPORTED OPCODE TYPE");
+			//invalid branch type
+			else if(result==2)
+				puts("ERROR: UNSUPPORTED BRANCH TYPE");
 			print_reset();
+			//terminates program with error code
 			return 1;
 		}
 
+	//continues until HALT(0x0000)
 	}while(halt == FALSE);
 	
 	printf("Done!\n");
+	//terminates VM with no error code
 	return 0;
 }
 

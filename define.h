@@ -1,3 +1,9 @@
+/*
+Assignment 3 _ SIA VM
+Made by David Kim
+Last Modified: 04/10/2020
+*/
+
 //Includes memory structure
 #include "memory.h"
 
@@ -12,6 +18,7 @@ int load(char *file_name);
 void ci_reset();
 void fetch();
 int decode();
+void get_registers(int **reg, int handler_type);
 
 //Functions in basic.c
 void interrupt();
@@ -22,7 +29,12 @@ void divider();
 void multiplyr();
 void subtractr();
 void orr();
-void get_registers(int **reg);
+
+//Functions in branch.c
+int decode_branch();
+void if_less();
+void if_less_equal();
+void if_equal();
 
 //Functions for memory stack, DO NOT MODIFY!!!
 //Note that memory related function is prefixed with mem_

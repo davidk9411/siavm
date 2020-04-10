@@ -1,7 +1,7 @@
 /*
 Assignment 3 _ SIA VM
 Made by David Kim
-Last Modified: 04/09/2020
+Last Modified: 04/10/2020
 */
 
 #include <stdio.h>
@@ -35,10 +35,21 @@ void fetch(){
 
     current_instruction[0] = mem_search(&sys_memory,mem_counter);
     current_instruction[1] = mem_search(&sys_memory,mem_counter+1);
+    //decides whther instruction is 4 byte or 2 byte
+    if(current_instruction[0] >> 4 == 7){
+        current_instruction[2] = mem_search(&sys_memory,mem_counter+2);
+        current_instruction[3] = mem_search(&sys_memory,mem_counter+3);
+    }
 }
 
+/*excutes proper functions based on OPCODE
+returns following:
+0 - success
+1 - unsupported opcode
+2 - unsupported branch type*/
 int decode(){
 
+    //extracts opcode from current instruction
     int opcode = current_instruction[0] >> 4;
     switch (opcode)
     {
@@ -76,6 +87,15 @@ int decode(){
             orr();
             mem_counter+=2;
             return 0;
+        // OPCODE 7: BRANCH
+        case 7:
+            //decode branch by type
+            if(decode_branch()!=0)
+                return 2;
+
+            /*Since memory moving depends on result of branchif
+            memory counter will handle on execution*/
+            return 0;
         // OPCODE 11: MOVE
         case 11:
             move();
@@ -89,5 +109,44 @@ int decode(){
         // ERROR
         default:
             return 1;
+    }
+}
+
+
+/*Internal register handler
+handler-typ:
+type 1: 3R instructions
+type 2: branch instructions*/
+void get_registers(int **reg, int handler_type){
+
+    //Handler for 3R instructions
+    if(handler_type==1){
+        int index[3];
+
+        //Obtains cpu_register number for OP1
+        index[0] = current_instruction[0] % 16;
+        //Obtains cpu_register number for OP2
+        index[1] = current_instruction[1] >> 4;
+        //Obtains cpu_register number for result(target)
+        index[2] = current_instruction[1] % 16;
+
+        //Assigns proper cpu_registers to internal registers
+        reg[0] = &cpu_register[index[0]];
+        reg[1] = &cpu_register[index[1]];
+        reg[2] = &cpu_register[index[2]];
+    }
+
+    //Handler for branch instructions
+    else if(handler_type==2){
+        int index[2];
+
+        //Obtains cpu_register number for OP1
+        index[0] = current_instruction[1] >> 4;
+        //Obtains cpu_register number for OP2
+        index[1] = current_instruction[1] % 16;
+
+        //Assigns poper cpu_registers to internal registers
+        reg[0] = &cpu_register[index[0]];
+        reg[1] = &cpu_register[index[1]];
     }
 }
