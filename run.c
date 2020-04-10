@@ -61,6 +61,21 @@ int decode(){
             divider();
             mem_counter+=2;
             return 0;
+        // OPCODE 4: MULTIPLY
+        case 4:
+            multiplyr();
+            mem_counter+=2;
+            return 0;
+        // OPCODE 5: SUBTRACT
+        case 5:
+            subtractr();
+            mem_counter+=2;
+            return 0;
+        // OPCODE 6: OR
+        case 6:
+            orr();
+            mem_counter+=2;
+            return 0;
         // OPCODE 11: MOVE
         case 11:
             move();

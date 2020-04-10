@@ -19,6 +19,9 @@ void move();
 void addr();
 void andr();
 void divider();
+void multiplyr();
+void subtractr();
+void orr();
 void get_registers(int **reg);
 
 //Functions for memory stack, DO NOT MODIFY!!!

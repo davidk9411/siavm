@@ -34,7 +34,7 @@ void addr(){
     int *internal_reg[3];
     //Handles internal register issues using seperate function
     get_registers(internal_reg);
-    //Performs ADD
+    //Performs ADDITION
     *internal_reg[2]=(*internal_reg[0])+(*internal_reg[1]);
 }
 
@@ -45,7 +45,7 @@ void andr(){
     int *internal_reg[3];
     //Handles internal register issues using seperate function
     get_registers(internal_reg);
-    //Performs AND
+    //Performs BITWISE AND
     *internal_reg[2]=(*internal_reg[0])&(*internal_reg[1]);
 }
 
@@ -58,6 +58,39 @@ void divider(){
     get_registers(internal_reg);
     //Performs DIVISION
     *internal_reg[2]=(*internal_reg[0])/(*internal_reg[1]);
+}
+
+//OPCODE 4: MULTIPLY
+void multiplyr(){
+
+    //Internal registers
+    int *internal_reg[3];
+    //Handles internal register issues using seperate function
+    get_registers(internal_reg);
+    //Performs MULTIPLICATION
+    *internal_reg[2]=(*internal_reg[0])*(*internal_reg[1]);
+}
+
+//OPCODE 5: SUBTRACT
+void subtractr(){
+        
+    //Internal registers
+    int *internal_reg[3];
+    //Handles internal register issues using seperate function
+    get_registers(internal_reg);
+    //Performs SUBTRACTION
+    *internal_reg[2]=(*internal_reg[0])-(*internal_reg[1]);
+}
+
+//OPCODE 6: OR
+void orr(){
+
+    //Internal registers
+    int *internal_reg[3];
+    //Handles internal register issues using seperate function
+    get_registers(internal_reg);
+    //Performs BITWISE OR
+    *internal_reg[2]=(*internal_reg[0])|(*internal_reg[1]);
 }
 
 //Opcode 11: Move
