@@ -51,6 +51,16 @@ int decode(){
             addr();
             mem_counter+=2;
             return 0;
+        // OPCODE 2: AND
+        case 2:
+            andr();
+            mem_counter+=2;
+            return 0;
+        // OPCODE 3: DIVIDE
+        case 3:
+            divider();
+            mem_counter+=2;
+            return 0;
         // OPCODE 11: MOVE
         case 11:
             move();

@@ -13,10 +13,13 @@ void ci_reset();
 void fetch();
 int decode();
 
-//Functions in execute.c
+//Functions in basic.c
 void interrupt();
 void move();
 void addr();
+void andr();
+void divider();
+void get_registers(int **reg);
 
 //Functions for memory stack, DO NOT MODIFY!!!
 //Note that memory related function is prefixed with mem_
