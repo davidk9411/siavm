@@ -41,6 +41,18 @@ int decode_branch(){
     case 2:
         if_equal();
         return 0;
+    // TYPE 3: BRANCHIFNOTEQUAL
+    case 3:
+        if_not_equal();
+        return 0;
+    // TYPE 4: BRAMCHIFGREATER
+    case 4:
+        if_greater();
+        return 0;
+    // TYPE 5: BRAMCHIFGREATEREQUAL
+    case 5:
+        if_greater_equal();
+        return 0;
     //Unsupported branch type
     default:
         return 1;
@@ -72,9 +84,7 @@ void if_less(){
 //TYPE 1: BRANCHIFLESSEQUAL
 void if_less_equal(){
 
-    /*Internal registers
-    0=op1, 1=op2
-    note this is an array*/
+    //Internal registers
     int *internal_reg[2];
 
     //Handles internal register issues using seperate function
@@ -91,12 +101,10 @@ void if_less_equal(){
         mem_counter += 2;
 }
 
-//TYPE 2: BRANCHIFLESSEQUAL
+//TYPE 2: BRANCHIFEQUAL
 void if_equal(){
 
-    /*Internal registers
-    0=op1, 1=op2
-    note this is an array*/
+    //Internal registers
     int *internal_reg[2];
 
     //Handles internal register issues using seperate function
@@ -104,6 +112,66 @@ void if_equal(){
 
     //check if equal
     if(*internal_reg[0]==(*internal_reg[1])){
+
+        int offset = ((int)current_instruction[2] << 8) + current_instruction[3]; 
+        mem_counter += (2*offset);
+    }
+    //false case
+    else
+        mem_counter += 2;
+}
+
+//TYPE 3: BRANCHIFNOTEQUAL
+void if_not_equal(){
+
+    //Internal registers
+    int *internal_reg[2];
+
+    //Handles internal register issues using seperate function
+    get_registers(internal_reg,2);
+
+    //check if not equal
+    if(*internal_reg[0]!=(*internal_reg[1])){
+
+        int offset = ((int)current_instruction[2] << 8) + current_instruction[3]; 
+        mem_counter += (2*offset);
+    }
+    //false case
+    else
+        mem_counter += 2;
+}
+
+//TYPE 4: BRANCHIFGREATER
+void if_greater(){
+
+    //Internal registers
+    int *internal_reg[2];
+
+    //Handles internal register issues using seperate function
+    get_registers(internal_reg,2);
+
+    //check if greater
+    if(*internal_reg[0]>(*internal_reg[1])){
+
+        int offset = ((int)current_instruction[2] << 8) + current_instruction[3]; 
+        mem_counter += (2*offset);
+    }
+    //false case
+    else
+        mem_counter += 2;
+}
+
+//TYPE 4: BRANCHIFGREATEREQUAL
+void if_greater_equal(){
+
+    //Internal registers
+    int *internal_reg[2];
+
+    //Handles internal register issues using seperate function
+    get_registers(internal_reg,2);
+
+    //check if greater equal
+    if(*internal_reg[0]>=(*internal_reg[1])){
 
         int offset = ((int)current_instruction[2] << 8) + current_instruction[3]; 
         mem_counter += (2*offset);

@@ -35,6 +35,9 @@ int decode_branch();
 void if_less();
 void if_less_equal();
 void if_equal();
+void if_not_equal();
+void if_greater();
+void if_greater_equal();
 
 //Functions for memory stack, DO NOT MODIFY!!!
 //Note that memory related function is prefixed with mem_
