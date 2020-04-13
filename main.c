@@ -121,6 +121,7 @@ void print_vm_resource(){
 	return;
 }
 
+//Loads from input file
 int load(char *file_name){
 
 	printf("Opening input file...\t");

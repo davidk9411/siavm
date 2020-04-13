@@ -46,6 +46,8 @@ void load_memory();
 void store_memory();
 int decode_stack();
 void return_R15();
+void push_R15();
+void handle_val(int reg_val, unsigned char *arr);
 
 //Functions for memory stack, DO NOT MODIFY!!!
 //Note that memory related function is prefixed with mem_

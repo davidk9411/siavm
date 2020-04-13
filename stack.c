@@ -62,11 +62,7 @@ void store_memory(){
     //Calculate address to store
     unsigned int address = *internal_reg[1]+2*(current_instruction[1]%16);
 
-    //Divide values by single bytes
-    values[0]=(*internal_reg[0]>>24);
-    values[1]=(*internal_reg[0]-values[0])>>16;
-    values[2]=(*internal_reg[0]-(values[0]+values[1]))>>8;
-    values[3]=(*internal_reg[0])%16;
+    handle_val(*internal_reg[0], values);
 
     //Store to memory
     for(int i=0; i<sizeof(values)/sizeof(unsigned char); i++)
@@ -85,6 +81,8 @@ int decode_stack(){
     case 0:
         return_R15();
         return 0;
+    // TYPE 1: PUSH
+    //case 1:
     // ERROR: UNSUPPORTED OPERATION
     default:
         return 1;
@@ -108,4 +106,19 @@ void return_R15(){
 
     //Overwrites R15 with top of the stack
     cpu_register[15] = index;
+}
+
+// TYPE 1: PUSH
+void push_R15(){
+
+    /*START HERE */
+}
+
+//Value devider
+void handle_val(int reg_val, unsigned char *arr){
+
+    arr[0] = reg_val>>24;
+    arr[1] = reg_val>>16;
+    arr[2] = reg_val>>8;
+    arr[3] = reg_val%16;
 }
