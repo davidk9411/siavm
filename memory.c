@@ -77,3 +77,18 @@ unsigned char mem_search(Memory *sys_mem, int index){
 	//Return memory value
 	return sys_mem->address[index];
 }
+
+//WRITE operation
+//Performs memory boundary check first
+//Returns 0 when successfully pushes
+int mem_wirte(Memory *sys_mem, unsigned char data, int index){
+
+	//Checks whether memroy is full or not
+	if(sys_mem->point == mem_SIZE-1){
+		return 1;
+	}
+
+	//Note that pointer increments first and then overwrites data
+	sys_mem->address[index] = data;
+	return 0;
+}

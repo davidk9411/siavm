@@ -57,6 +57,10 @@ int decode_branch(){
     case 6:
         call_fn();
         return 0;
+    // TYPE 7: JUMP
+    case 7:
+        jump();
+        return 0;
     //Unsupported branch type
     default:
         return 1;
@@ -199,6 +203,22 @@ void call_fn(){
     
     //Writes next instruction location to R15
     cpu_register[15] = mem_counter+4;
+
+    //Indicates next instruction location address
+    mem_counter = address;
+}
+
+//TYPE 7: JUMP
+void jump(){
+
+    unsigned int address;
+
+    //Addes up bits of address from current register
+    for (int i=1; i<sizeof(current_instruction)/sizeof(unsigned char); i++)
+        address+=current_instruction[i];
+
+    //Multiplies 2 to jump specified location
+    address*=2;
 
     //Indicates next instruction location address
     mem_counter = address;

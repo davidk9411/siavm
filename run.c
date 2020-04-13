@@ -96,6 +96,16 @@ int decode(){
             /*Since memory moving depends on result of branchif
             memory counter will handled on execution of each function*/
             return 0;
+        // OPCODE 8: LOAD
+        case 8:
+            load_memory();
+            mem_counter+=2;
+            return 0;
+        // OPCODE 9: STORE
+        case 9:
+            store_memory();
+            mem_counter+=2;
+            return 0;
         // OPCODE 10(A): STACK instruction
         case 10:
             if(decode_stack()!=0)
@@ -121,9 +131,11 @@ int decode(){
 
 
 /*Internal register handler
-handler-typ:
+handler-type:
 type 1: 3R instructions
-type 2: branch instructions*/
+type 2: branch instructions
+type 3: load/store instructions
+*/
 void get_registers(int **reg, int handler_type){
 
     //Handler for 3R instructions
@@ -153,6 +165,20 @@ void get_registers(int **reg, int handler_type){
         index[1] = current_instruction[1] % 16;
 
         //Assigns poper cpu_registers to internal registers
+        reg[0] = &cpu_register[index[0]];
+        reg[1] = &cpu_register[index[1]];
+    }
+
+    //Handler for ls instructions
+    else if(handler_type==3){
+        int index[2];
+
+        //Obtains cpu_register for ls
+        index[0] = current_instruction[0] % 16;
+        //Obtains cpu_register for address register
+        index[1] = current_instruction[1] >> 4;
+
+        //Assigns proper cpu_register to internal registers
         reg[0] = &cpu_register[index[0]];
         reg[1] = &cpu_register[index[1]];
     }

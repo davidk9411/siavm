@@ -39,8 +39,11 @@ void if_not_equal();
 void if_greater();
 void if_greater_equal();
 void call_fn();
+void jump();
 
 //Functions in stack.c
+void load_memory();
+void store_memory();
 int decode_stack();
 void return_R15();
 
@@ -51,15 +54,18 @@ int mem_is_empty(Memory *sys_mem);
 int mem_push(Memory *sys_mem, unsigned char data);
 int mem_pop(Memory *sys_mem);
 unsigned char mem_search(Memory *sys_mem, int index);
+int mem_wirte(Memory *sys_mem, unsigned char data, int index);
 
 //Functions for printf colors
 void print_red();
 void print_yellow();
 void print_green();
+void print_blue();
 void print_reset();
 
 //Predefine constant goes here
 #define TRUE 1
 #define FALSE 0
 #define NUM_REG 16
+#define DEFAULT_VAL 2147483647
 
