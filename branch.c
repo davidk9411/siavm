@@ -1,7 +1,7 @@
 /*
 Assignment 3 _ SIA VM
 Made by David Kim
-Last Modified: 04/10/2020
+Last Modified: 04/13/2020
 
 Includes: BRANCH INSTRUCTIONS
 */
@@ -52,6 +52,10 @@ int decode_branch(){
     // TYPE 5: BRAMCHIFGREATEREQUAL
     case 5:
         if_greater_equal();
+        return 0;
+    // TYPE 6: CALL
+    case 6:
+        call_fn();
         return 0;
     //Unsupported branch type
     default:
@@ -118,7 +122,7 @@ void if_equal(){
     }
     //false case
     else
-        mem_counter += 2;
+        mem_counter += 4;
 }
 
 //TYPE 3: BRANCHIFNOTEQUAL
@@ -161,7 +165,7 @@ void if_greater(){
         mem_counter += 2;
 }
 
-//TYPE 4: BRANCHIFGREATEREQUAL
+//TYPE 5: BRANCHIFGREATEREQUAL
 void if_greater_equal(){
 
     //Internal registers
@@ -179,4 +183,23 @@ void if_greater_equal(){
     //false case
     else
         mem_counter += 2;
+}
+
+//TYPE 6: CALL
+void call_fn(){
+
+    unsigned int address;
+
+    //Addes up bits of address from current register
+    for (int i=1; i<sizeof(current_instruction)/sizeof(unsigned char); i++)
+        address+=current_instruction[i];
+
+    //Multiplies 2 to jump specified location
+    address*=2;
+    
+    //Writes next instruction location to R15
+    cpu_register[15] = mem_counter+4;
+
+    //Indicates next instruction location address
+    mem_counter = address;
 }

@@ -66,6 +66,8 @@ int main(int argc, char *argv[]){
 			//invalid branch type
 			else if(result==2)
 				puts("ERROR: UNSUPPORTED BRANCH TYPE");
+			else if(result==3)
+				puts("ERROR: UNSUPPORTED STACK OPERATION");
 			print_reset();
 			//terminates program with error code
 			return 1;

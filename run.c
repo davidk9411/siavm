@@ -94,7 +94,14 @@ int decode(){
                 return 2;
 
             /*Since memory moving depends on result of branchif
-            memory counter will handle on execution*/
+            memory counter will handled on execution of each function*/
+            return 0;
+        // OPCODE 10(A): STACK instruction
+        case 10:
+            if(decode_stack()!=0)
+                return 3;
+
+            //Due to the return operation memory counter will handled on excution of function*/
             return 0;
         // OPCODE 11: MOVE
         case 11:

@@ -1,7 +1,7 @@
 /*
 Assignment 3 _ SIA VM
 Made by David Kim
-Last Modified: 04/10/2020
+Last Modified: 04/13/2020
 */
 
 //Includes memory structure
@@ -38,6 +38,11 @@ void if_equal();
 void if_not_equal();
 void if_greater();
 void if_greater_equal();
+void call_fn();
+
+//Functions in stack.c
+int decode_stack();
+void return_R15();
 
 //Functions for memory stack, DO NOT MODIFY!!!
 //Note that memory related function is prefixed with mem_
