@@ -116,18 +116,18 @@ void interrupt(){
     if(current_instruction[1]==0){
         //Prints registers
         print_green();
-        puts("REGISTER INFORMATION");
+        puts("REGISTER INFORMATION: DECIMAL(HEX)");
         for(int i=0; i<sizeof(cpu_register)/sizeof(int); i++){
-            cpu_register[i] == DEFAULT_VAL ? printf("R%d:\t%s\n",i,"NULL") : printf("R%d:\t%d\n",i,cpu_register[i]);
+            cpu_register[i] == DEFAULT_VAL ? printf("R%d:\t%s\n",i,"NULL") : printf("R%d:\t%010d(%04X)\n",i,cpu_register[i],cpu_register[i]);
         }
         print_reset();
     }
     else{
         print_blue();
-        puts("MEMORY INFORMATION");
+        puts("MEMORY INFORMATION: DECIMAL(HEX)");
         for(int i=0; i<mem_SIZE; i++){
             unsigned char mem_val = mem_search(&sys_memory,i);
-            mem_val == 0xff ? printf("M%d:\t%s\n",i,"NULL") : printf("M%d:\t%x\n",i,mem_val);
+            mem_val == 0xff ? printf("M%d:\t%s\n",i,"NULL") : printf("M%d:\t%03d(%02X)\n",i,mem_val,mem_val);
         }
     }
 }

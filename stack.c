@@ -82,7 +82,13 @@ int decode_stack(){
         return_R15();
         return 0;
     // TYPE 1: PUSH
-    //case 1:
+    case 1:
+        push_R15();
+        return 0;
+    // TYPE 2: POP
+    case 2:
+        pop_R15();
+        return 0;
     // ERROR: UNSUPPORTED OPERATION
     default:
         return 1;
@@ -111,14 +117,55 @@ void return_R15(){
 // TYPE 1: PUSH
 void push_R15(){
 
-    /*START HERE */
+    //Obtain register's value
+    int register_val = cpu_register[current_instruction[0]%16];
+
+    //Values to store
+    unsigned char values[4];
+
+    //Divide values by bytes
+    handle_val(register_val,values);
+
+    //Write to memory (PUSH)
+    for(int i=0; i<sizeof(values)/sizeof(unsigned char); i++)
+        mem_wirte(&sys_memory,values[i],cpu_register[15]+i);
+
+    //Move R15 to next location
+    cpu_register[15]-=4;
+
+    //Move memory counter for next instruction
+    mem_counter+=2;
+
+}
+
+// TYPE 2: POP
+void pop_R15(){
+
+    //Link cpu_register to internal register
+    int *reg_ptr = &cpu_register[current_instruction[0]%16];
+
+    //Move R15
+    cpu_register[15]+=4;
+
+    //Pre processing before pop
+    *reg_ptr=0;
+
+    //pop process
+    for(int i=0; i<sizeof(*reg_ptr); i++){
+        *reg_ptr += mem_search(&sys_memory,cpu_register[15]+i) << (24-(8*i));
+        mem_wirte(&sys_memory,0xff, cpu_register[15]+i);
+    }
+
+    //Move memory counter for next instruction
+    mem_counter+=2;
+
 }
 
 //Value devider
 void handle_val(int reg_val, unsigned char *arr){
 
     arr[0] = reg_val>>24;
-    arr[1] = reg_val>>16;
-    arr[2] = reg_val>>8;
-    arr[3] = reg_val%16;
+    arr[1] = (reg_val>>16)%256;
+    arr[2] = (reg_val>>8)%256;
+    arr[3] = reg_val%256;
 }

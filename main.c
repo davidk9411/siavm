@@ -137,9 +137,15 @@ int load(char *file_name){
 		return 1;
 	}
 
+	//File size check
+	fseek(input,0L, SEEK_END);
+	int file_size = ftell(input);
+
 	printf("OK!!\n");
-	printf("Input file: %s\n", basename(file_name));
+	printf("Input file: %s (%d Bytes)\n", basename(file_name), file_size);
 	printf("Loading input file to system memory...\t");
+
+
 
 	fseek(input, 0, SEEK_SET);
 
@@ -162,7 +168,8 @@ int load(char *file_name){
 			return 1;
 		}
 
-		if(feof(input))
+		//Stop if end of file
+		if(check_point(&sys_memory)+1==file_size)
 			break;
 	}
 

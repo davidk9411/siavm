@@ -47,6 +47,7 @@ void store_memory();
 int decode_stack();
 void return_R15();
 void push_R15();
+void pop_R15();
 void handle_val(int reg_val, unsigned char *arr);
 
 //Functions for memory stack, DO NOT MODIFY!!!
@@ -54,7 +55,7 @@ void handle_val(int reg_val, unsigned char *arr);
 void mem_init(Memory *sys_mem);
 int mem_is_empty(Memory *sys_mem);
 int mem_push(Memory *sys_mem, unsigned char data);
-int mem_pop(Memory *sys_mem);
+int check_point(Memory *sys_mem);
 unsigned char mem_search(Memory *sys_mem, int index);
 int mem_wirte(Memory *sys_mem, unsigned char data, int index);
 

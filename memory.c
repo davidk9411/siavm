@@ -27,7 +27,6 @@ void mem_init(Memory *sys_mem){
 	sys_mem->point = -1;
 }
 
-
 //Checks whether memory is empty or not.
 int mem_is_empty(Memory *sys_mem){
 
@@ -40,6 +39,7 @@ int mem_is_empty(Memory *sys_mem){
 //PUSH operation
 //Performs memory boundary check first
 //Returns 0 when successfully pushes
+//Memory load purpose!
 int mem_push(Memory *sys_mem, unsigned char data){
 
 	//Checks whether memroy is full or not
@@ -52,19 +52,11 @@ int mem_push(Memory *sys_mem, unsigned char data){
 	return 0;
 }
 
-//POP operation
-//Returns 0 when successfully pops or 1 if fails
-int mem_pop(Memory *sys_mem){
+//Point check
+//End of file check purpose
+int check_point(Memory *sys_mem){
 
-	//Check whether memory is empty
-	if(mem_is_empty(&sys_memory)==TRUE){
-		return 1;
-	}
-
-	//Memory erase
-	sys_mem->address[sys_mem->point--] = 0xff;
-
-	return 0; 
+	return sys_mem->point;
 }
 
 unsigned char mem_search(Memory *sys_mem, int index){
