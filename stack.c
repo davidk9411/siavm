@@ -99,19 +99,16 @@ int decode_stack(){
 // Type 0: RETURN
 void return_R15(){
 
-    //Get next instruction location from R15
-    mem_counter = cpu_register[15];
+   //Move R15
+    cpu_register[15]+=4;
 
-    //Stack check
-    int index=1020;
-
-    //Check whether stack is occupied
-    while(mem_search(&sys_memory,index+3)!=0xff){
-        index-=4;
+    //Memory counter reset for return
+    mem_counter=0;
+    //pop process for return
+    for(int i=0; i<sizeof(unsigned int); i++){
+        mem_counter += mem_search(&sys_memory,cpu_register[15]+i) << (24-(8*i));
+        mem_wirte(&sys_memory,0xff, cpu_register[15]+i);
     }
-
-    //Overwrites R15 with top of the stack
-    cpu_register[15] = index;
 }
 
 // TYPE 1: PUSH

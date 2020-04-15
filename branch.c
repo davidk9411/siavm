@@ -192,18 +192,33 @@ void if_greater_equal(){
 //TYPE 6: CALL
 void call_fn(){
 
-    unsigned int address;
+    unsigned int address = 0;
 
-    //Addes up bits of address from current register
-    for (int i=1; i<sizeof(current_instruction)/sizeof(unsigned char); i++)
+    //Addes up bits of address from current register (NEEDS TO BE FIXED)
+    /*for (int i=1; i<sizeof(current_instruction)/sizeof(unsigned char); i++)
         address+=current_instruction[i];
+    */
+
+   address+=current_instruction[1]<<16;
+   address+=current_instruction[2]<<8;
+   address+=current_instruction[3];
+
+    //Values to store
+    unsigned char values[4];
+
+    //Divide values by bytes
+    handle_val(mem_counter+4,values);
+
+    //Write to memory (PUSH)
+    for(int i=0; i<sizeof(values)/sizeof(unsigned char); i++)
+        mem_wirte(&sys_memory,values[i],cpu_register[15]+i);
+
+    //Move R15 to next location
+    cpu_register[15]-=4;
 
     //Multiplies 2 to jump specified location
     address*=2;
     
-    //Writes next instruction location to R15
-    cpu_register[15] = mem_counter+4;
-
     //Indicates next instruction location address
     mem_counter = address;
 }
