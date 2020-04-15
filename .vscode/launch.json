@@ -5,11 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Test SIAVM",
+            "name": "UNIT TEST",
             "type": "lldb",
             "request": "launch",
             "program": "${workspaceFolder}/siavm",
             "args": ["./inputs/result26.bin"],
+            "cwd": "${workspaceFolder}",
+        },
+        {
+            "name": "QA TEST",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/siavm",
+            "args": ["./TESTING/testcase/result19.bin"],
             "cwd": "${workspaceFolder}",
         }
     ]
